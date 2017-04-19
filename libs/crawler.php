@@ -23,7 +23,7 @@ $html = new simple_html_dom();
 $html->load($str);
 $count = 0;
 $autos = 0;
-
+$merk_naam = "";
 // foreach($html->find('img') as $element) echo $element->src . '<br />';
 
 echo "[";
@@ -51,6 +51,9 @@ foreach($html->find('tr[class=normalRowResult search-result-item] ') as $ts)
     foreach($tf->find('a') as $title)
       {
       echo '"title":"' . $title->plaintext . '", ';
+      $merk_naam = explode(' ',trim($title->plaintext))[0];
+      echo '"merk":"' . $merk_naam . '", ';
+
       }
 
     foreach($tf->find('ul') as $tr)
@@ -99,9 +102,15 @@ foreach($html->find('tr[class=normalRowResult search-result-item] ') as $ts)
     foreach($rinfo->find('div[class=search-result-item-price]') as $prijs)
       {
       $prijs = preg_replace('/[^0-9\.]/', '', $prijs);
-      echo '"price":"' . $prijs . '" ';
+      echo '"price":"' . $prijs . '", ';
       }
     }
+
+    $bouwjaar = preg_replace('/[ ]{1,}/', '', $ts->find('td',3)->plaintext);
+
+        echo '"jaar":' . $bouwjaar . ' ';
+
+
 
   $count = 0;
 
