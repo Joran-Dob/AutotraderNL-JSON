@@ -19,23 +19,26 @@ $html_details->load($d_c);
 echo "[";
 foreach($html_details->find('div[class=royalSlider rsDefault]') as $p_div)
   {
-    echo '{';
 
     $photo_n = 0;
     $last = count($p_div->find('a'));
 
     foreach($p_div->find('a') as $photo_a)
       {
+        echo '{';
         $photo_n = $photo_n+1;
+        echo '"photo":"' . $photo_a->href . '"';
+
         if($photo_n==$last){
-        echo '"photo'.$photo_n.'":"' . $photo_a->href . '"';
+          echo '}';
+
       }
       else{
-      echo '"photo'.$photo_n.'":"' . $photo_a->href . '", ';
+        echo '},';
+
 }
       }
 
-    echo '}';
 
   }
   echo "]";
