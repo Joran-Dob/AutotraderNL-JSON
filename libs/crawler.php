@@ -51,6 +51,14 @@ foreach($html->find('tr[class=normalRowResult search-result-item] ') as $ts)
     foreach($tf->find('a') as $title)
       {
       echo '"title":"' . $title->plaintext . '", ';
+
+
+      $d_url= 'https://api.autotrader.nl/'.$title->href;
+      echo '"details":"' . $d_url . '", ';
+
+
+
+
       $merk_naam = explode(' ',trim($title->plaintext))[0];
       echo '"merk":"' . $merk_naam . '", ';
 
