@@ -1,7 +1,8 @@
 <?php
 
-$base = "https://test1234.feesie.club/";
+// Dit script kijkt of er een verandering is tussen het huidige json bestand en de oude!
 
+$base = "https://test1234.feesie.club/";
 
 function sendMessage()
 {
@@ -50,14 +51,19 @@ curl_setopt($curl, CURLOPT_URL, $base);
 curl_setopt($curl, CURLOPT_REFERER, $base);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $str = curl_exec($curl);
-
+$str_array = json_decode($str, true);
+$c_str = count($str_array);
 curl_close($curl);
+
 $filename = 'libs/data/autos.json';
 $index_F = fopen($filename, "r") or die("Unable to open file!");
 $index_F_read = fread($index_F, filesize($filename));
+$index_F_read_array = json_decode($index_F_read, true);
+$c_index_F_read = count($index_F_read_array);
+
 
 if (is_readable("libs/data/autos.json")) {
-    if (!strcmp($index_F_read, $str) == 0) {
+    if (!strcmp($c_index_F_read, $c_str) == 0) {
         fclose($index_F);
 
         $response = sendMessage();
@@ -75,4 +81,3 @@ if (is_readable("libs/data/autos.json")) {
     } else {
     }
 }
-?>
